@@ -31,7 +31,7 @@ go get -u  github.com/wleven/wxpay
 ## 支付环境初始化
 
 ```
-var pay = WxPay{
+var WxPay = pay.WxPay{
     ...
 }
 
@@ -44,7 +44,7 @@ type WxPay struct {
 	PayNotify     string        // 支付结果回调地址
 	RefundNotify  string        // 退款结果回调地址
 	Secret        string        // 微信支付密钥
-	APIClientPath APIClientPath // API证书路径
+	APIClientPath pay.APIClientPath // API证书路径
 }
 
 // APIClientPath 微信支付API证书
@@ -59,7 +59,7 @@ type APIClientPath struct {
 ## 统一下单
 
 ```
-    if result, err := pay.UnifiedOrder(UnifiedOrder{
+    if result, err := WxPay.UnifiedOrder(pay.UnifiedOrder{
 		Attach:         "支付测试",
 		OutTradeNo:     "11111111111114",
 		TotalFee:       1,
@@ -84,7 +84,7 @@ type APIClientPath struct {
 ## 关闭订单
 
 ```
-	if result, err := pay.CloseOrder("11111111111112"); err == nil {
+	if result, err := WxPay.CloseOrder("11111111111112"); err == nil {
 		log.Println(result)
 	} else {
 		log.Println(err)
@@ -101,7 +101,7 @@ type APIClientPath struct {
 ## 查询订单
 
 ```
-	if result, err := pay.OrderQuery(OrderQuery{
+	if result, err := WxPay.OrderQuery(pay.OrderQuery{
 		OutTradeNo: "11111111111113",
 	}); err == nil {
 		log.Println(result)
@@ -113,7 +113,7 @@ type APIClientPath struct {
 ## 申请退款
 
 ```
-	if result, err := pay.Refund(Refund{
+	if result, err := WxPay.Refund(pay.Refund{
 		OutTradeNo:  "11111111111113",
 		TotalFee:    100,
 		RefundFee:   1,
@@ -134,7 +134,7 @@ type APIClientPath struct {
 ## 添加分账接收方
 
 ```
-	if result, err := pay.ProfitSharingAddReceiver(Receiver{
+	if result, err := WxPay.ProfitSharingAddReceiver(pay.Receiver{
 		Type:         "PERSONAL_OPENID",
 		Account:      "owJNp5PDj8lja9S3m2l2M_jt3aHY",
 		RelationType: "DISTRIBUTOR",
@@ -149,7 +149,7 @@ type APIClientPath struct {
 ## 删除分账接收方
 
 ```
-    if result, err := pay.ProfitSharingRemoveReceiver(Receiver{
+    if result, err := WxPay.ProfitSharingRemoveReceiver(pay.Receiver{
 		Type:    "PERSONAL_OPENID",
 		Account: "owJNp5PDj8lja9S3m2l2M_jt3aHY",
 	}); err == nil {
@@ -164,7 +164,7 @@ type APIClientPath struct {
 
 ```
 	// 第二个参数options为multi为多次分账  默认为单次
-	if result, err := pay.ProfitSharing(ProfitSharing{
+	if result, err := WxPay.ProfitSharing(pay.ProfitSharing{
 		TransactionID: "11111",
 		OutOrderNo:    "111111",
 		Receivers:     []Receiver{{Type: "PERSONAL_OPENID", Account: "owJNp5PDj8lja9S3m2l2M_jt3aHY", Amount: 1, Description: "个人分成"}},
@@ -179,7 +179,7 @@ type APIClientPath struct {
 ## 完成分账
 
 ```
-	if result, err := pay.ProfitSharingFinish(ProfitSharingFinish{
+	if result, err := WxPay.ProfitSharingFinish(pay.ProfitSharingFinish{
 		TransactionID: "11111",
 		OutOrderNo:    "111111",
 		Description:   "分账完成",
@@ -194,7 +194,7 @@ type APIClientPath struct {
 ## 查询分账结果
 
 ```
-	if result, err := pay.ProfitSharingQuery(ProfitSharingQuery{
+	if result, err := WxPay.ProfitSharingQuery(pay.ProfitSharingQuery{
 		TransactionID: "11111",
 		OutOrderNo:    "111111",
 	}); err == nil {
@@ -208,7 +208,7 @@ type APIClientPath struct {
 ## 分账回退
 
 ```
-	if result, err := pay.ProfitSharingReturn(ProfitSharingReturn{
+	if result, err := WxPay.ProfitSharingReturn(pay.ProfitSharingReturn{
 		OutOrderNo:    "1111111",
 		OutReturnNo:   "1111112",
 		ReturnAccount: "12312312",
@@ -225,7 +225,7 @@ type APIClientPath struct {
 ## 分账回退结果查询
 
 ```
-	if result, err := pay.ProfitSharingReturnQuery(ProfitSharingReturnQuery{
+	if result, err := WxPay.ProfitSharingReturnQuery(pay.ProfitSharingReturnQuery{
 		OutOrderNo:  "1111111",
 		OutReturnNo: "1111112",
 	}); err == nil {
