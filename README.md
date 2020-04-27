@@ -1,5 +1,10 @@
 # 微信支付 SDK For Golang
 
+![go 1.14](https://img.shields.io/badge/go-1.14-007d9c?logo=go&logoColor=white&style=flat-square)
+[![go.dev reference](https://img.shields.io/badge/go.dev-doc-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/wleven/wxpay)
+[![GitHub license](https://img.shields.io/github/license/wleven/wxpay?style=flat-square)](https://github.com/wleven/wxpay/blob/master/LICENSE)
+
+
 ### 支持微信商户支付/商户分账/服务商支付/服务商分账
 
 - [安装包](#安装包)
