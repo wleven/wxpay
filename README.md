@@ -25,7 +25,7 @@
 ## 安装包
 
 ```
-go get -u  https://github.com/wleven/wxpay
+go get -u  github.com/wleven/wxpay
 ```
 
 ## 支付环境初始化
