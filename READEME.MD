@@ -84,6 +84,11 @@ type APIClientPath struct {
 ## 关闭订单
 
 ```
+	if result, err := pay.CloseOrder("11111111111112"); err == nil {
+		log.Println(result)
+	} else {
+		log.Println(err)
+	}
 
 ```
 
@@ -96,13 +101,28 @@ type APIClientPath struct {
 ## 查询订单
 
 ```
-
+	if result, err := pay.OrderQuery(OrderQuery{
+		OutTradeNo: "11111111111113",
+	}); err == nil {
+		log.Println(result)
+	} else {
+		log.Println.Error(err)
+	}
 ```
 
 ## 申请退款
 
 ```
-
+	if result, err := pay.Refund(Refund{
+		OutTradeNo:  "11111111111113",
+		TotalFee:    100,
+		RefundFee:   1,
+		OutRefundNo: "11111111111113",
+	}); err == nil {
+		log.Println(result)
+	} else {
+		log.Println(err)
+	}
 ```
 
 ## 查询退款
@@ -114,41 +134,104 @@ type APIClientPath struct {
 ## 添加分账接收方
 
 ```
+	if result, err := pay.ProfitSharingAddReceiver(Receiver{
+		Type:         "PERSONAL_OPENID",
+		Account:      "owJNp5PDj8lja9S3m2l2M_jt3aHY",
+		RelationType: "DISTRIBUTOR",
+	}); err == nil {
+		log.Println(result)
+	} else {
+		log.Println(err)
+	}
 
 ```
 
 ## 删除分账接收方
 
 ```
+    if result, err := pay.ProfitSharingRemoveReceiver(Receiver{
+		Type:    "PERSONAL_OPENID",
+		Account: "owJNp5PDj8lja9S3m2l2M_jt3aHY",
+	}); err == nil {
+		log.Println(result)
+	} else {
+		log.Println(err)
+	}
 
 ```
 
 ## 发起分账
 
 ```
+	// 第二个参数options为multi为多次分账  默认为单次
+	if result, err := pay.ProfitSharing(ProfitSharing{
+		TransactionID: "11111",
+		OutOrderNo:    "111111",
+		Receivers:     []Receiver{{Type: "PERSONAL_OPENID", Account: "owJNp5PDj8lja9S3m2l2M_jt3aHY", Amount: 1, Description: "个人分成"}},
+	}, "multi"); err == nil {
+		log.Println(result)
+	} else {
+		log.Println(err)
+	}
 
 ```
 
 ## 完成分账
 
 ```
+	if result, err := pay.ProfitSharingFinish(ProfitSharingFinish{
+		TransactionID: "11111",
+		OutOrderNo:    "111111",
+		Description:   "分账完成",
+	}); err == nil {
+		log.Println(result)
+	} else {
+		log.Println(err)
+	}
 
 ```
 
 ## 查询分账结果
 
 ```
+	if result, err := pay.ProfitSharingQuery(ProfitSharingQuery{
+		TransactionID: "11111",
+		OutOrderNo:    "111111",
+	}); err == nil {
+		log.Println(result)
+	} else {
+		log.Println(err)
+	}
 
 ```
 
 ## 分账回退
 
 ```
+	if result, err := pay.ProfitSharingReturn(ProfitSharingReturn{
+		OutOrderNo:    "1111111",
+		OutReturnNo:   "1111112",
+		ReturnAccount: "12312312",
+		ReturnAmount:  100,
+		Description:   "回退",
+	}); err == nil {
+		log.Println(result)
+	} else {
+		log.Println(err)
+	}
 
 ```
 
 ## 分账回退结果查询
 
 ```
+	if result, err := pay.ProfitSharingReturnQuery(ProfitSharingReturnQuery{
+		OutOrderNo:  "1111111",
+		OutReturnNo: "1111112",
+	}); err == nil {
+		log.Println(result)
+	} else {
+		log.Println(err)
+	}
 
 ```
