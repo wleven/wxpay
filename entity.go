@@ -110,8 +110,8 @@ type CDATA struct {
 
 // ReverseOrder 撤销订单
 type ReverseOrder struct {
-	TransactionID string `json:"transaction_id,omitempty"` // 微信支付ID
-	OutTradeNo    string `json:"out_trade_no,omitempty"`   // 商户订单ID
+	TransactionID string `json:"transaction_id,omitempty"` // 微信支付ID 2选1
+	OutTradeNo    string `json:"out_trade_no,omitempty"`   // 商户订单ID 2选1
 }
 
 // OrderQuery 查询订单参数
