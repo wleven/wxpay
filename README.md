@@ -1,7 +1,7 @@
 # 微信支付 SDK For Golang
 
 ![go 1.14](https://img.shields.io/badge/go-1.14-green)
-[![go.dev reference](https://img.shields.io/badge/go.dev-doc-green)](https://pkg.go.dev/github.com/wleven/wxpay)
+[![go.dev doc](https://img.shields.io/badge/go.dev-doc-green)](https://pkg.go.dev/github.com/wleven/wxpay)
 [![GitHub license](https://img.shields.io/github/license/wleven/wxpay)](https://github.com/wleven/wxpay/blob/master/LICENSE)
 
 ### 支持微信商户支付/商户分账/服务商支付/服务商分账
@@ -45,8 +45,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 支付环境初始化
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/APIClientPath-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#APIClientPath)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![APIClientPath Doc](https://img.shields.io/badge/APIClientPath-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#APIClientPath)
 
 ```
 	var WxPay = pay.WxPay{
@@ -76,8 +76,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 统一下单
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/UnifiedOrder-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#UnifiedOrder)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![UnifiedOrder Doc](https://img.shields.io/badge/UnifiedOrder-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#UnifiedOrder)
 
 ```
 	var WxPay = pay.WxPay{
@@ -101,8 +101,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 小程序支付
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/UnifiedOrder-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#UnifiedOrder)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![UnifiedOrder Doc](https://img.shields.io/badge/UnifiedOrder-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#UnifiedOrder)
 
 ```
 	var WxPay = pay.WxPay{
@@ -127,8 +127,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 付款码支付
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/Micropay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#Micropay)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![Micropay Doc](https://img.shields.io/badge/Micropay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#Micropay)
 
 ```
 	var WxPay = pay.WxPay{
@@ -152,7 +152,7 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 关闭订单
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
 
 ```
 	var WxPay = pay.WxPay{
@@ -168,8 +168,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 撤销订单
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/ReverseOrder-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#ReverseOrder)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![ReverseOrder Doc](https://img.shields.io/badge/ReverseOrder-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#ReverseOrder)
 
 ```
 	var WxPay = pay.WxPay{
@@ -187,8 +187,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 查询订单
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/OrderQuery-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#OrderQuery)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![OrderQuery Doc](https://img.shields.io/badge/OrderQuery-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#OrderQuery)
 
 ```
 	var WxPay = pay.WxPay{
@@ -205,8 +205,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 申请退款
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/Refund-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#Refund)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![Refund Doc](https://img.shields.io/badge/Refund-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#Refund)
 
 ```
 	var WxPay = pay.WxPay{
@@ -226,8 +226,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 查询退款
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/RefundQuery-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#RefundQuery)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![RefundQuery Doc](https://img.shields.io/badge/RefundQuery-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#RefundQuery)
 
 ```
 	var WxPay = pay.WxPay{
@@ -245,8 +245,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 添加分账接收方
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/Receiver-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#Receiver)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![Receiver Doc](https://img.shields.io/badge/Receiver-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#Receiver)
 
 ```
 	var WxPay = pay.WxPay{
@@ -266,8 +266,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 删除分账接收方
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/Receiver-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#Receiver)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![Receiver Doc](https://img.shields.io/badge/Receiver-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#Receiver)
 
 ```
 	var WxPay = pay.WxPay{
@@ -286,8 +286,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 发起分账
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/ProfitSharing-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#ProfitSharing)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![ProfitSharing Doc](https://img.shields.io/badge/ProfitSharing-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#ProfitSharing)
 
 ```
 	var WxPay = pay.WxPay{
@@ -308,8 +308,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 完成分账
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/ProfitSharingFinish-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#ProfitSharingFinish)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![ProfitSharingFinish Doc](https://img.shields.io/badge/ProfitSharingFinish-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#ProfitSharingFinish)
 
 ```
 	var WxPay = pay.WxPay{
@@ -329,8 +329,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 查询分账结果
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/ProfitSharingQuery-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#ProfitSharingQuery)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![ProfitSharingQuery Doc](https://img.shields.io/badge/ProfitSharingQuery-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#ProfitSharingQuery)
 
 ```
 	var WxPay = pay.WxPay{
@@ -349,8 +349,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 分账回退
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/ProfitSharingReturn-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#ProfitSharingReturn)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![ProfitSharingReturn Doc](https://img.shields.io/badge/ProfitSharingReturn-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#ProfitSharingReturn)
 
 ```
 	var WxPay = pay.WxPay{
@@ -372,8 +372,8 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 
 ## 分账回退结果查询
 
-[![go.dev reference](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
-[![go.dev reference](https://img.shields.io/badge/ProfitSharingReturnQuery-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#ProfitSharingReturnQuery)
+[![WxPay Doc](https://img.shields.io/badge/WxPay-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#WxPay)
+[![ProfitSharingReturnQuery Doc](https://img.shields.io/badge/ProfitSharingReturnQuery-Struct_Doc-green)](https://pkg.go.dev/github.com/wleven/wxpay?tab=doc#ProfitSharingReturnQuery)
 
 ```
 	var WxPay = pay.WxPay{
