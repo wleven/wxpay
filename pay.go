@@ -8,9 +8,10 @@ import (
 	"errors"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/wleven/wxpay/utils"
 )
@@ -61,7 +62,6 @@ func (c WxPay) request(url string, body io.Reader, cert bool) (map[string]string
 		defer resp.Body.Close()
 		b, _ := ioutil.ReadAll(resp.Body)
 		var result PublicResponse
-		log.Println(string(b))
 		_ = xml.Unmarshal(b, &result)
 		err := result.ResultCheck()
 		if err == nil {
@@ -128,8 +128,24 @@ func (c WxPay) UnifiedOrder(params UnifiedOrder) (map[string]string, error) {
 	return c.request("https://api.mch.weixin.qq.com/pay/unifiedorder", strings.NewReader(utils.MAP2XML(m)), false)
 }
 
+// WxAppPay 小程序下单接口
+func (c WxPay) WxAppPay(params UnifiedOrder) (map[string]interface{}, error) {
+	m, err := c.UnifiedOrder(params)
+	if err == nil {
+		result := make(map[string]interface{})
+		result["appId"] = m["appid"]
+		result["nonceStr"] = m["nonce_str"]
+		result["package"] = "prepay_id=" + m["prepay_id"]
+		result["timeStamp"] = strconv.FormatInt(time.Now().Unix(), 10)
+		result["signType"] = "HMAC-SHA256"
+		result["paySign"] = utils.Sign(result, c.Secret)
+		return result, err
+	}
+	return nil, err
+}
+
 // Micropay 付款码支付
-func (c WxPay) Micropay(params UnifiedOrder) (map[string]string, error) {
+func (c WxPay) Micropay(params Micropay) (map[string]string, error) {
 	m := utils.MAPMerge(utils.Struct2Map(params), c.publicParams())
 	m["sign"] = utils.Sign(m, c.Secret)
 	return c.request("https://api.mch.weixin.qq.com/pay/micropay", strings.NewReader(utils.MAP2XML(m)), false)
@@ -150,7 +166,7 @@ func (c WxPay) CloseOrder(outTradeNo string) (map[string]string, error) {
 func (c WxPay) ReverseOrder(params ReverseOrder) (map[string]string, error) {
 	m := utils.MAPMerge(utils.Struct2Map(params), c.publicParams())
 	m["sign"] = utils.Sign(m, c.Secret)
-	return c.request("https://api.mch.weixin.qq.com/secapi/pay/reverse", strings.NewReader(utils.MAP2XML(m)), false)
+	return c.request("https://api.mch.weixin.qq.com/secapi/pay/reverse", strings.NewReader(utils.MAP2XML(m)), true)
 }
 
 // OrderQuery 查询订单

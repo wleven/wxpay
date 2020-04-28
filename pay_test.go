@@ -6,13 +6,13 @@ import (
 )
 
 var pay = WxPay{
-	AppID:        "3232323432423542",
-	MchID:        "1111111",
+	AppID:        "",
+	MchID:        "",
 	SubAppID:     "",
 	SubMchID:     "",
 	PayNotify:    "",
 	RefundNotify: "",
-	Secret:       "6666666",
+	Secret:       "",
 	APIClientPath: APIClientPath{
 		Cert: "",
 		Key:  "",
@@ -37,8 +37,51 @@ func TestWxPay_UnifiedOrder(t *testing.T) {
 	}
 }
 
+func TestWxPay_WxAppPay(t *testing.T) {
+	if result, err := pay.WxAppPay(UnifiedOrder{
+		Attach:         "支付测试",
+		OutTradeNo:     "11111111111115 ",
+		TotalFee:       1,
+		SpbillCreateIP: "127.0.0.1",
+		OpenID:         "owJNp5PDj8lja9S3m2l2M_jt3aHY",
+		Receipt:        "Y",
+		Body:           "测试",
+		TradeType:      "JSAPI",
+	}); err == nil {
+		log.Println(result)
+	} else {
+		t.Error(err)
+	}
+}
+
+func TestWxPay_Micropay(t *testing.T) {
+	if result, err := pay.Micropay(Micropay{
+		Attach:         "支付测试",
+		OutTradeNo:     "11111111111115",
+		TotalFee:       1,
+		SpbillCreateIP: "127.0.0.1",
+		Receipt:        "Y",
+		Body:           "测试",
+		AuthCode:       "12312312312",
+	}); err == nil {
+		log.Println(result)
+	} else {
+		t.Error(err)
+	}
+}
+
 func TestWxPay_CloseOrder(t *testing.T) {
 	if result, err := pay.CloseOrder("11111111111112"); err == nil {
+		log.Println(result)
+	} else {
+		t.Error(err)
+	}
+}
+
+func TestWxPay_ReverseOrder(t *testing.T) {
+	if result, err := pay.ReverseOrder(ReverseOrder{
+		OutTradeNo: "11111111111112",
+	}); err == nil {
 		log.Println(result)
 	} else {
 		t.Error(err)
@@ -61,6 +104,16 @@ func TestWxPay_Refund(t *testing.T) {
 		TotalFee:    100,
 		RefundFee:   1,
 		OutRefundNo: "11111111111113",
+	}); err == nil {
+		log.Println(result)
+	} else {
+		t.Error(err)
+	}
+}
+
+func TestWxPay_RefundQuery(t *testing.T) {
+	if result, err := pay.RefundQuery(RefundQuery{
+		OutTradeNo: "11111111111113",
 	}); err == nil {
 		log.Println(result)
 	} else {
