@@ -130,6 +130,7 @@ func (c WxPay) UnifiedOrder(params UnifiedOrder) (map[string]string, error) {
 
 // WxAppPay 小程序下单接口
 func (c WxPay) WxAppPay(params UnifiedOrder) (map[string]interface{}, error) {
+	params.TradeType = "JSAPI"
 	m, err := c.UnifiedOrder(params)
 	if err == nil {
 		result := make(map[string]interface{})
