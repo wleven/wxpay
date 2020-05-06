@@ -38,7 +38,7 @@ go get -u  github.com/wleven/wxpay
 
 ```
 // 执行命令
-godoc -http:=8888 -play
+godoc -http=:8888 -play
 // 浏览器打开文档
 http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 ```
