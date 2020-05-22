@@ -40,6 +40,9 @@ func SortKey(m map[string]interface{}) string {
 		case int:
 			num := strconv.Itoa(m[v].(int))
 			str = str + v + "=" + num + "&"
+		case float64:
+			num := strconv.Itoa(int(m[v].(float64)))
+			str = str + v + "=" + num + "&"
 		}
 	}
 	return str

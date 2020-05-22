@@ -17,7 +17,7 @@ type UnifiedOrder struct {
 	Attach         string              `json:"attach,omitempty"`           // 附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
 	OutTradeNo     string              `json:"out_trade_no,omitempty"`     // 商户系统内部订单号
 	FeeType        string              `json:"fee_type,omitempty"`         // 币种,默认人民币：CNY
-	TotalFee       int                 `json:"total_fee,omitempty,string"` // 订单总金额，单位为分
+	TotalFee       int                 `json:"total_fee,omitempty"`        // 订单总金额，单位为分
 	SpbillCreateIP string              `json:"spbill_create_ip,omitempty"` // 支持IPV4和IPV6两种格式的IP地址。用户的客户端IP
 	TimeStart      string              `json:"time_start,omitempty"`       // 订单生成时间
 	TimeEnd        string              `json:"time_end,omitempty"`         // 订单失效时间
@@ -41,7 +41,7 @@ type Micropay struct {
 	Attach         string              `json:"attach,omitempty"`           // 附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
 	OutTradeNo     string              `json:"out_trade_no,omitempty"`     // 商户系统内部订单号
 	FeeType        string              `json:"fee_type,omitempty"`         // 币种,默认人民币：CNY
-	TotalFee       int                 `json:"total_fee,omitempty,string"` // 订单总金额，单位为分
+	TotalFee       int                 `json:"total_fee,omitempty"`        // 订单总金额，单位为分
 	SpbillCreateIP string              `json:"spbill_create_ip,omitempty"` // 支持IPV4和IPV6两种格式的IP地址。用户的客户端IP
 	TimeStart      string              `json:"time_start,omitempty"`       // 订单生成时间
 	TimeExpire     string              `json:"time_expire,omitempty"`      // 订单失效时间
@@ -56,18 +56,18 @@ type Micropay struct {
 
 // UnifiedOrderDetail 商品详情
 type UnifiedOrderDetail struct {
-	CostPrice   int           `json:"cost_price,omitempty,string"` // 订单原价
-	ReceiptID   string        `json:"receipt_id,omitempty"`        // 小票ID
-	GoodsDetail []GoodsDetail `json:"goods_detail,omitempty"`      // 商品详情
+	CostPrice   int           `json:"cost_price,omitempty"`   // 订单原价
+	ReceiptID   string        `json:"receipt_id,omitempty"`   // 小票ID
+	GoodsDetail []GoodsDetail `json:"goods_detail,omitempty"` // 商品详情
 }
 
 // GoodsDetail 商品详情
 type GoodsDetail struct {
-	GoodsID      string `json:"goods_id,omitempty"`        // 商品ID
-	WxpayGoodsID string `json:"wxpay_goods_id,omitempty"`  // 微信支付定义的统一商品编号（没有可不传）
-	GoodsName    string `json:"goods_name,omitempty"`      // 商品的实际名称
-	Quantity     int    `json:"quantity,omitempty,string"` // 用户购买的数量
-	Price        int    `json:"price,omitempty,string"`    // 单位为：分。如果商户有优惠，需传输商户优惠后的单价
+	GoodsID      string `json:"goods_id,omitempty"`       // 商品ID
+	WxpayGoodsID string `json:"wxpay_goods_id,omitempty"` // 微信支付定义的统一商品编号（没有可不传）
+	GoodsName    string `json:"goods_name,omitempty"`     // 商品的实际名称
+	Quantity     int    `json:"quantity,omitempty"`       // 用户购买的数量
+	Price        int    `json:"price,omitempty"`          // 单位为：分。如果商户有优惠，需传输商户优惠后的单价
 }
 
 // SceneInfo 场景信息
@@ -122,14 +122,14 @@ type OrderQuery struct {
 
 // Refund 退款参数
 type Refund struct {
-	TransactionID string `json:"transaction_id,omitempty"`    // 微信支付ID
-	OutTradeNo    string `json:"out_trade_no,omitempty"`      // 商户订单ID
-	OutRefundNo   string `json:"out_refund_no,omitempty"`     // 商户系统内部的退款单号
-	TotalFee      int    `json:"total_fee,omitempty,string"`  // 订单总金额，单位为分
-	RefundFee     int    `json:"refund_fee,omitempty,string"` // 退款总金额，订单总金额
-	RefundFeeType string `json:"refund_fee_type,omitempty"`   // 退款货币类型，需与支付一致，或者不填。
-	RefundDesc    string `json:"refund_desc,omitempty"`       // 若商户传入，会在下发给用户的退款消息中体现退款原因
-	RefundAccount string `json:"refund_account,omitempty"`    // 退款资金来源 仅针对老资金流商户使用
+	TransactionID string `json:"transaction_id,omitempty"`  // 微信支付ID
+	OutTradeNo    string `json:"out_trade_no,omitempty"`    // 商户订单ID
+	OutRefundNo   string `json:"out_refund_no,omitempty"`   // 商户系统内部的退款单号
+	TotalFee      int    `json:"total_fee,omitempty"`       // 订单总金额，单位为分
+	RefundFee     int    `json:"refund_fee,omitempty"`      // 退款总金额，订单总金额
+	RefundFeeType string `json:"refund_fee_type,omitempty"` // 退款货币类型，需与支付一致，或者不填。
+	RefundDesc    string `json:"refund_desc,omitempty"`     // 若商户传入，会在下发给用户的退款消息中体现退款原因
+	RefundAccount string `json:"refund_account,omitempty"`  // 退款资金来源 仅针对老资金流商户使用
 }
 
 // RefundQuery 退款查询参数
@@ -138,7 +138,7 @@ type RefundQuery struct {
 	OutTradeNo    string `json:"out_trade_no,omitempty"`   // 商户订单ID 四选一
 	OutRefundNo   string `json:"out_refund_no,omitempty"`  // 商户系统内部的退款单号 四选一
 	RefundID      string `json:"refund_id,omitempty"`      // 微信退款单号 四选一
-	Offset        int    `json:"offset,omitempty,string"`  // 偏移量，当部分退款次数超过10次时可使用，表示返回的查询结果从这个偏移量开始取记录
+	Offset        int    `json:"offset,omitempty"`         // 偏移量，当部分退款次数超过10次时可使用，表示返回的查询结果从这个偏移量开始取记录
 }
 
 // Receiver 分账接收方
@@ -148,7 +148,7 @@ type Receiver struct {
 	Name           string `json:"name,omitempty"`            // 商户全称
 	CustomRelation string `json:"custom_relation,omitempty"` // 子商户与接收方具体的关系，本字段最多10个字
 	RelationType   string `json:"relation_type,omitempty"`   // 分账关系
-	Amount         int    `json:"amount,omitempty,string"`   // 分账金额
+	Amount         int    `json:"amount,omitempty"`          // 分账金额
 	Description    string `json:"description,omitempty"`     // 分账描述
 }
 
@@ -174,12 +174,12 @@ type ProfitSharingQuery struct {
 
 // ProfitSharingReturn 分账回退参数
 type ProfitSharingReturn struct {
-	OrderID       string `json:"order_id,omitempty"`             // 原发起分账请求时，微信返回的微信分账单号，与商户分账单号一一对应 2选1
-	OutOrderNo    string `json:"out_order_no,omitempty"`         // 原发起分账请求时使用的商户后台系统的分账单号 2选1
-	OutReturnNo   string `json:"out_return_no,omitempty"`        // 商户在自己后台生成的一个新的回退单号
-	ReturnAccount string `json:"return_account,omitempty"`       // 回退方类型是MERCHANT_ID时，填写商户ID
-	ReturnAmount  int    `json:"return_amount,omitempty,string"` // 回退金额
-	Description   string `json:"description,omitempty"`          // 分账回退的原因描述
+	OrderID       string `json:"order_id,omitempty"`       // 原发起分账请求时，微信返回的微信分账单号，与商户分账单号一一对应 2选1
+	OutOrderNo    string `json:"out_order_no,omitempty"`   // 原发起分账请求时使用的商户后台系统的分账单号 2选1
+	OutReturnNo   string `json:"out_return_no,omitempty"`  // 商户在自己后台生成的一个新的回退单号
+	ReturnAccount string `json:"return_account,omitempty"` // 回退方类型是MERCHANT_ID时，填写商户ID
+	ReturnAmount  int    `json:"return_amount,omitempty"`  // 回退金额
+	Description   string `json:"description,omitempty"`    // 分账回退的原因描述
 }
 
 // ProfitSharingReturnQuery 分账回退查询参数
