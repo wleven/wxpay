@@ -1,4 +1,4 @@
-package pay
+package V2
 
 import "errors"
 

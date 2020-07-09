@@ -1,23 +1,13 @@
-package pay
+package V2
 
 import (
+	"github.com/wleven/wxpay/global"
 	"log"
 	"testing"
 )
 
 var pay = WxPay{
-	AppID:        "",
-	MchID:        "",
-	SubAppID:     "",
-	SubMchID:     "",
-	PayNotify:    "",
-	RefundNotify: "",
-	Secret:       "",
-	APIClientPath: APIClientPath{
-		Cert: "",
-		Key:  "",
-		Root: "",
-	},
+	global.V2,
 }
 
 func TestWxPay_UnifiedOrder(t *testing.T) {
@@ -90,7 +80,7 @@ func TestWxPay_ReverseOrder(t *testing.T) {
 
 func TestWxPay_OrderQuery(t *testing.T) {
 	if result, err := pay.OrderQuery(OrderQuery{
-		OutTradeNo: "11111111111113",
+		OutTradeNo: "674BB66E408A6931788347BF25E9BCAA",
 	}); err == nil {
 		log.Println(result)
 	} else {
@@ -100,10 +90,10 @@ func TestWxPay_OrderQuery(t *testing.T) {
 
 func TestWxPay_Refund(t *testing.T) {
 	if result, err := pay.Refund(Refund{
-		OutTradeNo:  "11111111111113",
-		TotalFee:    100,
-		RefundFee:   1,
-		OutRefundNo: "11111111111113",
+		OutTradeNo:  "BC9AA9B9E43C13E7932CB3B181468A4F",
+		TotalFee:    990,
+		RefundFee:   990,
+		OutRefundNo: "BC9AA9B9E43C13E7932CB3B181468A4F",
 	}); err == nil {
 		log.Println(result)
 	} else {
@@ -124,7 +114,7 @@ func TestWxPay_RefundQuery(t *testing.T) {
 func TestWxPay_ProfitSharingAddReceiver(t *testing.T) {
 	if result, err := pay.ProfitSharingAddReceiver(Receiver{
 		Type:         "PERSONAL_OPENID",
-		Account:      "owJNp5PDj8lja9S3m2l2M_jt3aHY",
+		Account:      "owJNp5M6Trxg5qBjh8KTPnTm65Sg",
 		RelationType: "DISTRIBUTOR",
 	}); err == nil {
 		log.Println(result)

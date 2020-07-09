@@ -1,4 +1,4 @@
-package pay
+package V2
 
 import (
 	"crypto/tls"
@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"errors"
+	"github.com/wleven/wxpay/src/entity"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -18,14 +19,7 @@ import (
 
 // WxPay 微信支付
 type WxPay struct {
-	AppID         string        // 商户/服务商 AppId(公众号/小程序)
-	MchID         string        // 商户/服务商 商户号
-	SubAppID      string        // 子商户公众号ID
-	SubMchID      string        // 子商户商户号
-	PayNotify     string        // 支付结果回调地址
-	RefundNotify  string        // 退款结果回调地址
-	Secret        string        // 微信支付密钥
-	APIClientPath APIClientPath // API证书路径
+	config entity.PayConfig
 }
 
 // 网络请求
@@ -38,9 +32,9 @@ func (c WxPay) request(url string, body io.Reader, cert bool) (map[string]string
 			return nil, err
 		}
 		// 微信提供的API证书,证书和证书密钥 .pem格式
-		certs, _ := tls.LoadX509KeyPair(c.APIClientPath.Cert, c.APIClientPath.Key)
+		certs, _ := tls.LoadX509KeyPair(c.config.APIClientPath.Cert, c.config.APIClientPath.Key)
 		// 微信支付HTTPS服务器证书的根证书  .pem格式
-		rootCa, _ := ioutil.ReadFile(c.APIClientPath.Root)
+		rootCa, _ := ioutil.ReadFile(c.config.APIClientPath.Root)
 
 		pool := x509.NewCertPool()
 		pool.AppendCertsFromPEM(rootCa)
@@ -75,14 +69,14 @@ func (c WxPay) request(url string, body io.Reader, cert bool) (map[string]string
 // 公共参数
 func (c WxPay) publicParams() (m map[string]interface{}) {
 	m = make(map[string]interface{})
-	m["appid"] = c.AppID
-	m["mch_id"] = c.MchID
+	m["appid"] = c.config.AppID
+	m["mch_id"] = c.config.MchID
 	m["nonce_str"] = utils.RandomStr()
-	if c.SubMchID != "" {
-		m["sub_mch_id"] = c.SubMchID
+	if c.config.SubMchID != "" {
+		m["sub_mch_id"] = c.config.SubMchID
 	}
-	if c.SubAppID != "" {
-		m["sub_appid"] = c.SubAppID
+	if c.config.SubAppID != "" {
+		m["sub_appid"] = c.config.SubAppID
 	}
 	m["sign_type"] = "HMAC-SHA256"
 	return
@@ -91,11 +85,11 @@ func (c WxPay) publicParams() (m map[string]interface{}) {
 // 检查支付配置
 func (c WxPay) checkConfig() (err error) {
 
-	if c.AppID == "" {
+	if c.config.AppID == "" {
 		err = errors.New("AppID 不能为空")
-	} else if c.MchID == "" {
+	} else if c.config.MchID == "" {
 		err = errors.New("MchID 不能为空")
-	} else if c.Secret == "" {
+	} else if c.config.Secret == "" {
 		err = errors.New("Secret 不能为空")
 	} else {
 		err = nil
@@ -105,11 +99,11 @@ func (c WxPay) checkConfig() (err error) {
 
 // 检查支付证书
 func (c WxPay) checkClient() (err error) {
-	if c.APIClientPath.Cert == "" {
+	if c.config.APIClientPath.Cert == "" {
 		err = errors.New("APIClientPath.Cert 不能为空")
-	} else if c.APIClientPath.Key == "" {
+	} else if c.config.APIClientPath.Key == "" {
 		err = errors.New("APIClientPath.Key 不能为空")
-	} else if c.APIClientPath.Root == "" {
+	} else if c.config.APIClientPath.Root == "" {
 		err = errors.New("APIClientPath.Key 不能为空")
 	} else {
 		err = nil
@@ -122,8 +116,8 @@ func (c WxPay) UnifiedOrder(params UnifiedOrder) (map[string]string, error) {
 
 	m := utils.MAPMerge(utils.Struct2Map(params), c.publicParams())
 
-	m["notify_url"] = c.PayNotify
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["notify_url"] = c.config.PayNotify
+	m["sign"] = utils.Sign(m, c.config.Secret)
 
 	return c.request("https://api.mch.weixin.qq.com/pay/unifiedorder", strings.NewReader(utils.MAP2XML(m)), false)
 }
@@ -139,7 +133,7 @@ func (c WxPay) WxAppPay(params UnifiedOrder) (map[string]interface{}, error) {
 		result["package"] = "prepay_id=" + m["prepay_id"]
 		result["timeStamp"] = strconv.FormatInt(time.Now().Unix(), 10)
 		result["signType"] = "HMAC-SHA256"
-		result["paySign"] = utils.Sign(result, c.Secret)
+		result["paySign"] = utils.Sign(result, c.config.Secret)
 		return result, err
 	}
 	return nil, err
@@ -148,7 +142,7 @@ func (c WxPay) WxAppPay(params UnifiedOrder) (map[string]interface{}, error) {
 // Micropay 付款码支付
 func (c WxPay) Micropay(params Micropay) (map[string]string, error) {
 	m := utils.MAPMerge(utils.Struct2Map(params), c.publicParams())
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["sign"] = utils.Sign(m, c.config.Secret)
 	return c.request("https://api.mch.weixin.qq.com/pay/micropay", strings.NewReader(utils.MAP2XML(m)), false)
 }
 
@@ -158,7 +152,7 @@ func (c WxPay) CloseOrder(outTradeNo string) (map[string]string, error) {
 	m := c.publicParams()
 
 	m["out_trade_no"] = outTradeNo
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["sign"] = utils.Sign(m, c.config.Secret)
 
 	return c.request("https://api.mch.weixin.qq.com/pay/closeorder", strings.NewReader(utils.MAP2XML(m)), false)
 }
@@ -166,29 +160,29 @@ func (c WxPay) CloseOrder(outTradeNo string) (map[string]string, error) {
 // ReverseOrder 撤销订单
 func (c WxPay) ReverseOrder(params ReverseOrder) (map[string]string, error) {
 	m := utils.MAPMerge(utils.Struct2Map(params), c.publicParams())
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["sign"] = utils.Sign(m, c.config.Secret)
 	return c.request("https://api.mch.weixin.qq.com/secapi/pay/reverse", strings.NewReader(utils.MAP2XML(m)), true)
 }
 
 // OrderQuery 查询订单
 func (c WxPay) OrderQuery(params OrderQuery) (map[string]string, error) {
 	m := utils.MAPMerge(utils.Struct2Map(params), c.publicParams())
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["sign"] = utils.Sign(m, c.config.Secret)
 	return c.request("https://api.mch.weixin.qq.com/pay/orderquery", strings.NewReader(utils.MAP2XML(m)), false)
 }
 
 // Refund 申请退款
 func (c WxPay) Refund(params Refund) (map[string]string, error) {
 	m := utils.MAPMerge(utils.Struct2Map(params), c.publicParams())
-	m["notify_url"] = c.RefundNotify
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["notify_url"] = c.config.RefundNotify
+	m["sign"] = utils.Sign(m, c.config.Secret)
 	return c.request("https://api.mch.weixin.qq.com/secapi/pay/refund", strings.NewReader(utils.MAP2XML(m)), true)
 }
 
 // RefundQuery 查询退款
 func (c WxPay) RefundQuery(params RefundQuery) (map[string]string, error) {
 	m := utils.MAPMerge(utils.Struct2Map(params), c.publicParams())
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["sign"] = utils.Sign(m, c.config.Secret)
 	return c.request("https://api.mch.weixin.qq.com/pay/refundquery", strings.NewReader(utils.MAP2XML(m)), false)
 }
 
@@ -197,7 +191,7 @@ func (c WxPay) ProfitSharingAddReceiver(params Receiver) (map[string]string, err
 	m := c.publicParams()
 	b, _ := json.Marshal(params)
 	m["receiver"] = string(b)
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["sign"] = utils.Sign(m, c.config.Secret)
 	return c.request("https://api.mch.weixin.qq.com/pay/profitsharingaddreceiver", strings.NewReader(utils.MAP2XML(m)), false)
 }
 
@@ -206,14 +200,14 @@ func (c WxPay) ProfitSharingRemoveReceiver(params Receiver) (map[string]string, 
 	m := c.publicParams()
 	b, _ := json.Marshal(params)
 	m["receiver"] = string(b)
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["sign"] = utils.Sign(m, c.config.Secret)
 	return c.request("https://api.mch.weixin.qq.com/pay/profitsharingremovereceiver", strings.NewReader(utils.MAP2XML(m)), false)
 }
 
 // ProfitSharingFinish 完成分账
 func (c WxPay) ProfitSharingFinish(params ProfitSharingFinish) (map[string]string, error) {
 	m := utils.MAPMerge(utils.Struct2Map(params), c.publicParams())
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["sign"] = utils.Sign(m, c.config.Secret)
 	return c.request("https://api.mch.weixin.qq.com/secapi/pay/profitsharingfinish", strings.NewReader(utils.MAP2XML(m)), true)
 }
 
@@ -222,7 +216,7 @@ func (c WxPay) ProfitSharing(params ProfitSharing, option string) (map[string]st
 	m := utils.MAPMerge(utils.Struct2Map(params), c.publicParams())
 	b, _ := json.Marshal(params.Receivers)
 	m["receivers"] = string(b)
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["sign"] = utils.Sign(m, c.config.Secret)
 	if option == "multi" {
 		return c.request("https://api.mch.weixin.qq.com/secapi/pay/multiprofitsharing", strings.NewReader(utils.MAP2XML(m)), true)
 	}
@@ -235,7 +229,7 @@ func (c WxPay) ProfitSharingQuery(params ProfitSharingQuery) (map[string]string,
 	delete(m, "appid")
 	delete(m, "sub_appid")
 
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["sign"] = utils.Sign(m, c.config.Secret)
 	return c.request("https://api.mch.weixin.qq.com/pay/profitsharingquery", strings.NewReader(utils.MAP2XML(m)), false)
 }
 
@@ -243,14 +237,14 @@ func (c WxPay) ProfitSharingQuery(params ProfitSharingQuery) (map[string]string,
 func (c WxPay) ProfitSharingReturn(params ProfitSharingReturn) (map[string]string, error) {
 	m := utils.MAPMerge(utils.Struct2Map(params), c.publicParams())
 	m["return_account_type"] = "MERCHANT_ID "
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["sign"] = utils.Sign(m, c.config.Secret)
 	return c.request("https://api.mch.weixin.qq.com/secapi/pay/profitsharingreturn", strings.NewReader(utils.MAP2XML(m)), true)
 }
 
 // ProfitSharingReturnQuery 分账回退结果查询
 func (c WxPay) ProfitSharingReturnQuery(params ProfitSharingReturnQuery) (map[string]string, error) {
 	m := utils.MAPMerge(utils.Struct2Map(params), c.publicParams())
-	m["sign"] = utils.Sign(m, c.Secret)
+	m["sign"] = utils.Sign(m, c.config.Secret)
 	return c.request("https://api.mch.weixin.qq.com/pay/profitsharingreturnquery", strings.NewReader(utils.MAP2XML(m)), false)
 }
 

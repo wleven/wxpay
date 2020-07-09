@@ -36,13 +36,19 @@ func SortKey(m map[string]interface{}) string {
 	for _, v := range arr {
 		switch m[v].(type) {
 		case string:
-			str = str + v + "=" + m[v].(string) + "&"
+			if m[v] != "" {
+				str = str + v + "=" + m[v].(string) + "&"
+			}
 		case int:
-			num := strconv.Itoa(m[v].(int))
-			str = str + v + "=" + num + "&"
+			if m[v] != 0 {
+				num := strconv.Itoa(m[v].(int))
+				str = str + v + "=" + num + "&"
+			}
 		case float64:
-			num := strconv.Itoa(int(m[v].(float64)))
-			str = str + v + "=" + num + "&"
+			if m[v] != 0.00 {
+				num := strconv.Itoa(int(m[v].(float64)))
+				str = str + v + "=" + num + "&"
+			}
 		}
 	}
 	return str
