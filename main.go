@@ -14,8 +14,9 @@ import (
 )
 
 type WXPayApi struct {
-	V2 *V2.WxPay
-	V3 *V3.API
+	V2     *V2.WxPay         // V2接口
+	V3     *V3.API           // V3接口
+	Config *entity.PayConfig // 配置
 }
 
 func Init(params entity.PayConfig) (api WXPayApi) {
@@ -27,6 +28,7 @@ func Init(params entity.PayConfig) (api WXPayApi) {
 		ClientKeyPath: params.APIClientPath.Key,
 		SerialNo:      params.SerialNo,
 	})
+	api.Config = &params
 
 	return
 }
