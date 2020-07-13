@@ -18,11 +18,11 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
-	"github.com/wleven/wxpay/utils"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"time"
+
+	"github.com/wleven/wxpay/utils"
 )
 
 type V3 struct {
@@ -39,13 +39,15 @@ func (m V3) Request(api string, body interface{}, out interface{}) error {
 	host := "https://api.mch.weixin.qq.com"
 	if body != nil {
 		b, _ := json.Marshal(body)
-		log.Println(string(b))
 		request, _ = http.NewRequest("POST", host+api, bytes.NewReader(b))
 	} else {
 		request, _ = http.NewRequest("GET", host+api, nil)
 	}
+	sign, err := m.Sign(api, body)
+	if err != nil {
+		return err
+	}
 
-	sign := m.Sign(api, body)
 	request.Header.Add("Accept", "application/json")
 	request.Header.Add("Content-Type", "application/json")
 	request.Header.Add("Authorization", sign)
@@ -66,7 +68,7 @@ func (m V3) Request(api string, body interface{}, out interface{}) error {
 // @param method string 请求类型
 // @param url string 请求地址
 // @param body interface 请求数据
-func (m V3) Sign(url string, body interface{}) string {
+func (m V3) Sign(url string, body interface{}) (string, error) {
 	var data string = ""
 	var method = "GET"
 	t := time.Now().Unix()
@@ -81,23 +83,23 @@ func (m V3) Sign(url string, body interface{}) string {
 	str := fmt.Sprintf("%s\n%s\n%d\n%s\n%s\n", method, url, t, randomStr, data)
 	key, _ := ioutil.ReadFile(m.ClientKeyPath)
 
-	sign := m.rsaEncrypt([]byte(str), key)
+	sign, err := m.rsaEncrypt([]byte(str), key)
 
 	return fmt.Sprintf("WECHATPAY2-SHA256-RSA2048 mchid=\"%s\",nonce_str=\"%s\","+
-		"signature=\"%s\",timestamp=\"%d\",serial_no=\"%s\"", m.MchID, randomStr, sign, t, m.SerialNo)
+		"signature=\"%s\",timestamp=\"%d\",serial_no=\"%s\"", m.MchID, randomStr, sign, t, m.SerialNo), err
 }
 
 // 私钥加密
-func (m V3) rsaEncrypt(data, keyBytes []byte) string {
+func (m V3) rsaEncrypt(data, keyBytes []byte) (string, error) {
 	//解密pem格式的私钥
 	block, _ := pem.Decode(keyBytes)
 	if block == nil {
-		panic(errors.New("public key error"))
+		return "", errors.New("public key error")
 	}
 	// 解析私钥
 	pubInterface, err := x509.ParsePKCS8PrivateKey(block.Bytes)
 	if err != nil {
-		panic(err)
+		return "", err
 	}
 	// 类型断言
 	pub := pubInterface.(*rsa.PrivateKey)
@@ -105,10 +107,10 @@ func (m V3) rsaEncrypt(data, keyBytes []byte) string {
 	msg := sha256.Sum256(data)
 	sign, err := rsa.SignPKCS1v15(rand.Reader, pub, crypto.SHA256, msg[:])
 	if err != nil {
-		panic(err)
+		return "", err
 	}
 
-	return base64.StdEncoding.EncodeToString(sign)
+	return base64.StdEncoding.EncodeToString(sign), nil
 }
 
 type Result struct {
