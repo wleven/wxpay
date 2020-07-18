@@ -28,30 +28,34 @@ func Struct2Map(params interface{}) (m map[string]interface{}) {
 // SortKey map排序
 func SortKey(m map[string]interface{}) string {
 	arr := make([]string, 0)
-	str := ""
 	for k := range m {
 		arr = append(arr, k)
 	}
-	sort.Strings(arr)
-	for _, v := range arr {
-		switch m[v].(type) {
+
+	strArr := make([]string, 0)
+
+	for _, key := range arr {
+		switch m[key].(type) {
 		case string:
-			if m[v] != "" {
-				str = str + v + "=" + m[v].(string) + "&"
+			value := m[key].(string)
+			if value != "" {
+				strArr = append(strArr, key+"="+value)
 			}
 		case int:
-			if m[v] != 0 {
-				num := strconv.Itoa(m[v].(int))
-				str = str + v + "=" + num + "&"
+			if m[key] != 0 {
+				value := strconv.Itoa(m[key].(int))
+				strArr = append(strArr, key+"="+value)
 			}
 		case float64:
-			if m[v] != 0.00 {
-				num := strconv.Itoa(int(m[v].(float64)))
-				str = str + v + "=" + num + "&"
+			if m[key] != 0.00 {
+				value := strconv.Itoa(int(m[key].(float64)))
+				strArr = append(strArr, key+"="+value)
 			}
 		}
 	}
-	return str
+
+	sort.Strings(strArr)
+	return strings.Join(strArr, "&")
 }
 
 // MAP2XML map转xml
@@ -129,7 +133,7 @@ func MD5(str string) string {
 
 // Sign 生成签名 HMAC-SHA256加密
 func Sign(m map[string]interface{}, key string) (sign string) {
-	sign = HmacSha256(SortKey(m)+"key="+key, key)
+	sign = HmacSha256(SortKey(m)+"&key="+key, key)
 	return
 }
 
