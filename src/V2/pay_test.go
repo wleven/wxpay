@@ -223,3 +223,18 @@ func TestNotifyDataFormat(t *testing.T) {
 	log.Println(m)
 
 }
+
+func TestWxPay_Transfers(t *testing.T) {
+
+	if result, err := pay.Transfers(Transfers{
+		PartnerTradeNo: "1",
+		OpenID:         "owJNp5PDj8lja9S3m2l2M_jt3aHY",
+		CheckName:      "NO_CHECK",
+		Amount:         100,
+		Desc:           "付款测试",
+	}); err == nil {
+		log.Println(result)
+	} else {
+		t.Error(err)
+	}
+}
