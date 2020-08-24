@@ -2,9 +2,10 @@
 
 - [x] V2 版支付(商户/服务商)
 - [x] V2 版分账(商户/服务商)
+- [x] V2 版企业付款到零钱
 - [x] V3 版支付即服务
 
-![go 1.14](https://img.shields.io/badge/go-1.14-green)
+![go 1.15](https://img.shields.io/badge/go-1.15-green)
 [![go.dev doc](https://img.shields.io/badge/go.dev-doc-green)](https://pkg.go.dev/github.com/wleven/wxpay)
 [![GitHub license](https://img.shields.io/github/license/wleven/wxpay)](https://github.com/wleven/wxpay/blob/master/LICENSE)
 
@@ -12,6 +13,7 @@
 - [查看文档](#查看文档)
 - [V2 版本下单接口](#V2版本下单接口)
 - [V2 版本分账接口](#V2版本分账接口)
+- [V2 版本企业付款到零钱](#V2版本企业付款到零钱)
 - [V3 版本支付即服务接口](#V3版本支付即服务接口)
 
 ## 安装包
@@ -34,15 +36,15 @@ http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 ```golang
 config := entity.PayConfig{
    // 传入支付初始化参数
-   // AppID         string        // 商户/服务商 AppId(公众号/小程序)
-   // MchID         string        // 商户/服务商 商户号
-   // SubAppID      string        // 子商户公众号ID
-   // SubMchID      string        // 子商户商户号
-   // PayNotify     string        // 支付结果回调地址
-   // RefundNotify  string        // 退款结果回调地址
-   // Secret        string        // 微信支付密钥
-   // APIClientPath APIClientPath // API证书路径,使用V3接口必传
-   // SerialNo      string        // 证书编号,使用V3接口必传
+   AppID         string        // 商户/服务商 AppId(公众号/小程序)
+   MchID         string        // 商户/服务商 商户号
+   SubAppID      string        // 子商户公众号ID
+   SubMchID      string        // 子商户商户号
+   PayNotify     string        // 支付结果回调地址
+   RefundNotify  string        // 退款结果回调地址
+   Secret        string        // 微信支付密钥
+   APIClientPath APIClientPath // API证书路径,使用V3接口必传
+   SerialNo      string        // 证书编号,使用V3接口必传
 }
 
 wxpay := WXPay.Init(config)
@@ -98,6 +100,13 @@ if data, err := wxpay.V2.ProfitSharingReturn(V2.ProfitSharingReturn{/* 传入参
 if data, err := wxpay.V2.ProfitSharingReturnQuery(V2.ProfitSharingReturnQuery{/* 传入参数 */}); err == nil {
 }
 
+```
+
+## V2 版本企业付款到零钱
+
+```golang
+if data, err := wxpay.V2.Transfers(V2.Transfers{/* 传入参数 */}); err == nil {
+}
 ```
 
 ## V3 版本支付即服务接口
