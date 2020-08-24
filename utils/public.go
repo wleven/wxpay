@@ -132,8 +132,14 @@ func MD5(str string) string {
 }
 
 // Sign 生成签名 HMAC-SHA256加密
-func Sign(m map[string]interface{}, key string) (sign string) {
+func SignHMACSHA256(m map[string]interface{}, key string) (sign string) {
 	sign = HmacSha256(SortKey(m)+"&key="+key, key)
+	return
+}
+
+// SignMD5 生成签名 MD5加密
+func SignMD5(m map[string]interface{}, key string) (sign string) {
+	sign = MD5(SortKey(m) + "&key=" + key)
 	return
 }
 
