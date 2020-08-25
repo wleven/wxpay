@@ -194,6 +194,6 @@ type Transfers struct {
 	PartnerTradeNo string `json:"partner_trade_no"` // 商户订单号
 	OpenID         string `json:"openid"`           // OPENID
 	CheckName      string `json:"check_name"`       // NO_CHECK：不校验真实姓名  FORCE_CHECK：强校验真实姓名
-	Amount         uint   `json:"amount"`           // 企业付款金额，单位为分
+	Amount         int    `json:"amount"`           // 企业付款金额，单位为分
 	Desc           string `json:"desc"`             // 企业付款备注，必填。注意：备注中的敏感词会被转成字符*
 }
