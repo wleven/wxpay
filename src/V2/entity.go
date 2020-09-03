@@ -20,7 +20,7 @@ type UnifiedOrder struct {
 	TotalFee       int                 `json:"total_fee,omitempty"`        // 订单总金额，单位为分
 	SpbillCreateIP string              `json:"spbill_create_ip,omitempty"` // 支持IPV4和IPV6两种格式的IP地址。用户的客户端IP
 	TimeStart      string              `json:"time_start,omitempty"`       // 订单生成时间
-	TimeEnd        string              `json:"time_end,omitempty"`         // 订单失效时间
+	TimeExpire     string              `json:"time_expire,omitempty"`      // 订单失效时间
 	GoodsTag       string              `json:"goods_tag,omitempty"`        // 订单优惠标记
 	NotifyURL      string              `json:"notify_url,omitempty"`       // 支付结果通知的回调地址
 	TradeType      string              `json:"trade_type,omitempty"`       // JSAPI/NATIVE/APP
