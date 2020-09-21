@@ -72,10 +72,21 @@ type GoodsDetail struct {
 
 // SceneInfo 场景信息
 type SceneInfo struct {
-	ID       string `json:"id,omitempty"`        // 门店编号，由商户自定义
-	Name     string `json:"name,omitempty"`      // 门店名称 ，由商户自定义
-	AreaCode string `json:"area_code,omitempty"` // 门店所在地行政区划码
-	Address  string `json:"address,omitempty"`   // 门店详细地址 ，由商户自定义
+	ID       string  `json:"id,omitempty"`        // 门店编号，由商户自定义
+	Name     string  `json:"name,omitempty"`      // 门店名称 ，由商户自定义
+	AreaCode string  `json:"area_code,omitempty"` // 门店所在地行政区划码
+	Address  string  `json:"address,omitempty"`   // 门店详细地址 ，由商户自定义
+	H5Info   *H5Info `json:"h5_info,omitempty"`   //h5支付场景信息
+}
+
+// H5Info h5支付场景信息
+type H5Info struct {
+	Type        string `json:"type,omitempty"`         // 场景类型
+	AppName     string `json:"app_name,omitempty"`     // 应用名
+	PackageName string `json:"package_name,omitempty"` // 包名
+	BundleID    string `json:"bundle_id,omitempty"`    // bundle_id
+	WapURL      string `json:"wap_url,omitempty"`      // WAP网站URL地址
+	WapName     string `json:"wap_name,omitempty"`     // WAP网站名
 }
 
 // ResultCheck 返回结果检查接口
