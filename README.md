@@ -54,6 +54,12 @@ if data, err := wxpay.V2.UnifiedOrder(V2.UnifiedOrder{/* 传入参数 */}); err 
 // 小程序支付
 if data, err := wxpay.V2.WxAppPay(V2.UnifiedOrder{/* 传入参数 */}); err == nil {
 }
+// APP支付
+if data, err := wxpay.V2.WxAppAppPay(V2.UnifiedOrder{/* 传入参数 */}); err == nil {
+}
+// H5支付
+if data, err := wxpay.V2.WxH5Pay(V2.UnifiedOrder{/* 传入参数 */}); err == nil {
+}
 // 付款码支付
 if data, err := wxpay.V2.Micropay(V2.Micropay{/* 传入参数 */}); err == nil {
 }
