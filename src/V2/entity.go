@@ -102,12 +102,16 @@ type PublicResponse struct {
 	ResultMsg  string `xml:"result_msg,omitempty" json:"result_msg,omitempty"`     // 对于业务执行的详细描述
 	ErrCode    string `xml:"err_code,omitempty" json:"err_code,omitempty"`         // 当result_code为FAIL时返回错误代码
 	ErrCodeDes string `xml:"err_code_des,omitempty" json:"err_code_des,omitempty"` // 当result_code为FAIL时返回错误描述
+	ErrorMsg   string `xml:"error_msg,omitempty" json:"error_msg,omitempty"`       // 当result_code为FAIL时返回错误描述
 }
 
 // ResultCheck 检查是否返回成功
 func (m PublicResponse) ResultCheck() error {
 	if m.ReturnCode == "FAIL" {
-		return errors.New(m.ReturnMsg)
+		if m.ResultMsg != "" {
+			return errors.New(m.ReturnMsg)
+		}
+		return errors.New(m.ErrorMsg)
 	} else if m.ResultCode == "FAIL" {
 		return errors.New(m.ErrCodeDes)
 	}
