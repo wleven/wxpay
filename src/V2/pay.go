@@ -40,6 +40,7 @@ func (c WxPay) request(url string, body io.Reader, cert bool) (map[string]string
 		pool.AppendCertsFromPEM(rootCa)
 
 		client = http.Client{Transport: &http.Transport{
+			DisableKeepAlives: true,
 			TLSClientConfig: &tls.Config{
 				RootCAs:      pool,
 				Certificates: []tls.Certificate{certs},
