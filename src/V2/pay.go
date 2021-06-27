@@ -105,7 +105,7 @@ func (c WxPay) checkClient() (err error) {
 	} else if c.config.APIClientPath.Key == "" {
 		err = errors.New("APIClientPath.Key 不能为空")
 	} else if c.config.APIClientPath.Root == "" {
-		err = errors.New("APIClientPath.Key 不能为空")
+		err = errors.New("APIClientPath.Root 不能为空")
 	} else {
 		err = nil
 	}
