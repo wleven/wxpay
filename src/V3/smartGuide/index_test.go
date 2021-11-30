@@ -23,8 +23,8 @@ func TestSmartGuide_Query(t *testing.T) {
 
 func TestSmartGuide_Assign(t *testing.T) {
 	if data, err := smartGuide.Assign(Assign{
-		GuideID:    "01007196110000000001",
-		OutTradeNo: "8319B95CFEDE8F60A77A5BDE4E359E01",
+		GuideID:    "",
+		OutTradeNo: "",
 	}); err == nil {
 		t.Log(data)
 	} else {
@@ -34,13 +34,13 @@ func TestSmartGuide_Assign(t *testing.T) {
 
 func TestSmartGuide_Register(t *testing.T) {
 	if data, err := smartGuide.Register(Register{
-		CorpID:  "123",
-		StoreID: 20774227,
-		Name:    "test",
-		UserId:  "123",
-		Mobile:  "123",
-		QRCode:  "123",
-		Avatar:  "123",
+		CorpID:  "",
+		StoreID: 0,
+		Name:    "",
+		UserId:  "",
+		Mobile:  "",
+		QRCode:  "",
+		Avatar:  "",
 	}); err == nil {
 		t.Log(data)
 	} else {
