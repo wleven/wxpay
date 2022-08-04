@@ -32,12 +32,14 @@ func (c WxPay) request(url string, body io.Reader, cert bool) (map[string]string
 			return nil, err
 		}
 		// 微信提供的API证书,证书和证书密钥 .pem格式
-		certs, _ := tls.LoadX509KeyPair(c.config.APIClientPath.Cert, c.config.APIClientPath.Key)
+		// certs, _ := tls.LoadX509KeyPair(c.config.APIClientPath.Cert, c.config.APIClientPath.Key)
+		certs, _ := tls.X509KeyPair(c.config.APIClientPath.Cert, c.config.APIClientPath.Key)
+
 		// 微信支付HTTPS服务器证书的根证书  .pem格式
-		rootCa, _ := ioutil.ReadFile(c.config.APIClientPath.Root)
+		// rootCa, _ := ioutil.ReadFile(c.config.APIClientPath.Root)
 
 		pool := x509.NewCertPool()
-		pool.AppendCertsFromPEM(rootCa)
+		pool.AppendCertsFromPEM(c.config.APIClientPath.Root)
 
 		client = http.Client{Transport: &http.Transport{
 			DisableKeepAlives: true,
@@ -100,11 +102,11 @@ func (c WxPay) checkConfig() (err error) {
 
 // 检查支付证书
 func (c WxPay) checkClient() (err error) {
-	if c.config.APIClientPath.Cert == "" {
+	if len(c.config.APIClientPath.Cert) == 0 {
 		err = errors.New("APIClientPath.Cert 不能为空")
-	} else if c.config.APIClientPath.Key == "" {
+	} else if len(c.config.APIClientPath.Key) == 0 {
 		err = errors.New("APIClientPath.Key 不能为空")
-	} else if c.config.APIClientPath.Root == "" {
+	} else if len(c.config.APIClientPath.Root) == 0 {
 		err = errors.New("APIClientPath.Root 不能为空")
 	} else {
 		err = nil

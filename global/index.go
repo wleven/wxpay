@@ -12,9 +12,9 @@ import (
 )
 
 var V3 = config.V3{
-	MchID:         "",
-	ClientKeyPath: "",
-	SerialNo:      "",
+	MchID:     "",
+	ClientKey: []byte{},
+	SerialNo:  "",
 }
 
 var V2 = entity.PayConfig{
@@ -26,9 +26,9 @@ var V2 = entity.PayConfig{
 	RefundNotify: "",
 	Secret:       "",
 	APIClientPath: entity.APIClientPath{
-		Cert: "",
-		Key:  "",
-		Root: "",
+		Cert: []byte{},
+		Key:  []byte{},
+		Root: []byte{},
 	},
 	SerialNo: "",
 }

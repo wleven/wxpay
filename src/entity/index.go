@@ -20,7 +20,7 @@ type PayConfig struct {
 
 // APIClientPath 微信支付API证书
 type APIClientPath struct {
-	Cert string // 证书路径
-	Key  string // 私钥证书路径,使用V3接口必传
-	Root string // 根证书路径
+	Cert []byte // 证书内容
+	Key  []byte // 私钥证书内容,使用V3接口必传
+	Root []byte // 根证书内容
 }
