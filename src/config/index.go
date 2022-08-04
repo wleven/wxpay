@@ -26,9 +26,9 @@ import (
 )
 
 type V3 struct {
-	MchID         string `json:"mchid"`         // 商户ID
-	ClientKeyPath string `json:"clientKeyPath"` // 证书私钥路径
-	SerialNo      string `json:"serialNo"`      // 证书编号
+	MchID     string `json:"mchid"`     // 商户ID
+	ClientKey []byte `json:"clientKey"` // 证书私钥内容
+	SerialNo  string `json:"serialNo"`  // 证书编号
 }
 
 func (m V3) Request(api string, body interface{}, out interface{}) error {
@@ -81,9 +81,8 @@ func (m V3) Sign(url string, body interface{}) (string, error) {
 	}
 
 	str := fmt.Sprintf("%s\n%s\n%d\n%s\n%s\n", method, url, t, randomStr, data)
-	key, _ := ioutil.ReadFile(m.ClientKeyPath)
 
-	sign, err := m.rsaEncrypt([]byte(str), key)
+	sign, err := m.rsaEncrypt([]byte(str), m.ClientKey)
 
 	return fmt.Sprintf("WECHATPAY2-SHA256-RSA2048 mchid=\"%s\",nonce_str=\"%s\","+
 		"signature=\"%s\",timestamp=\"%d\",serial_no=\"%s\"", m.MchID, randomStr, sign, t, m.SerialNo), err

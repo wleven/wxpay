@@ -24,9 +24,9 @@ func Init(params entity.PayConfig) (api WXPayApi) {
 	api.V2 = V2.Init(params)
 
 	api.V3 = V3.Init(&config.V3{
-		MchID:         params.MchID,
-		ClientKeyPath: params.APIClientPath.Key,
-		SerialNo:      params.SerialNo,
+		MchID:     params.MchID,
+		ClientKey: params.APIClientPath.Key,
+		SerialNo:  params.SerialNo,
 	})
 	api.Config = &params
 

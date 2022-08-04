@@ -32,6 +32,9 @@ godoc -http=:8888 -play
 http://127.0.0.1:8888/pkg/github.com/wleven/wxpay/
 ```
 
+## 破坏性更新
+- 1.3.0版本将API证书配置`APIClientPath`的证书路径由`string`改为`[]byte`类型,1.3.0之前的版本不受影响。
+
 ## V2 版本下单接口
 
 ```golang
@@ -44,7 +47,7 @@ config := entity.PayConfig{
    PayNotify     string        // 支付结果回调地址
    RefundNotify  string        // 退款结果回调地址
    Secret        string        // 微信支付密钥
-   APIClientPath APIClientPath // API证书路径,使用V3接口必传
+   APIClientPath APIClientPath // API证书内容,使用V3接口必传
    SerialNo      string        // 证书编号,使用V3接口必传
 }
 
