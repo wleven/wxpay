@@ -108,7 +108,7 @@ type PublicResponse struct {
 // ResultCheck 检查是否返回成功
 func (m PublicResponse) ResultCheck() error {
 	if m.ReturnCode == "FAIL" {
-		if m.ResultMsg != "" {
+		if m.ReturnMsg != "" {
 			return errors.New(m.ReturnMsg)
 		}
 		return errors.New(m.ErrorMsg)
