@@ -131,7 +131,11 @@ func (c WxPay) WxAppPay(params UnifiedOrder) (map[string]interface{}, error) {
 	m, err := c.UnifiedOrder(params)
 	if err == nil {
 		result := make(map[string]interface{})
-		result["appId"] = m["appid"]
+		if c.config.SubAppID != "" {
+			result["appId"] = m["sub_appid"]
+		} else {
+			result["appId"] = m["appid"]
+		}
 		result["nonceStr"] = m["nonce_str"]
 		result["package"] = "prepay_id=" + m["prepay_id"]
 		result["timeStamp"] = strconv.FormatInt(time.Now().Unix(), 10)
