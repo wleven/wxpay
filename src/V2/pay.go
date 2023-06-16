@@ -134,7 +134,7 @@ func (c WxPay) WxAppPay(params UnifiedOrder) (map[string]interface{}, error) {
 		if c.config.SubAppID != "" {
 			result["appId"] = m["sub_appid"]
 		} else {
-			result["appId"] = m["appId"]
+			result["appId"] = m["appid"]
 		}
 		result["nonceStr"] = m["nonce_str"]
 		result["package"] = "prepay_id=" + m["prepay_id"]
